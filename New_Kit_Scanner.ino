@@ -10,7 +10,7 @@
 #define series2 239                                  //190 2000 for 80's 218 3000 for 2008  
 #define delay1 51                                    //Swipe fast out
 #define delay2 142                                   //Swipe slow in
-#define PulseFreq 8000
+#define PulseFreq 15000
 
 // Green, Red, Blue
 #define Orange ( 70, 255, 0)
@@ -46,7 +46,7 @@ void loop() {
  
 void system_tick() { 
     counter=millis();
-    if(counter=3000) {
+    if(counter=PulseFreq) {
   
 //------------------------Swipe Out-----------------------
 Serial.print(" Swipe out");
