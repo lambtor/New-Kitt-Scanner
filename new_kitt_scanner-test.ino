@@ -41,7 +41,7 @@ void setup() {
 	}
 }
 
-//.nscale8 effects the lenght of the light trail 190 is 2000 series, 220 appears similar to 3000 series.
+//.nscale8 effects the length of the light trail 190 is 2000 series, 220 appears similar to 3000 series.
 void fadeall() { for(int i = 0; i < NUM_LEDS; i++) { leds[i].nscale8(series1); } }   //Swipe in
 void fadeall2() { for(int i = 0; i < NUM_LEDS; i++) { leds[i].nscale8(series2); } }  //Swipe out
 
