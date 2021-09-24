@@ -1,5 +1,5 @@
 //Knight Scanner v3
-//By Ashrond
+//By Ashrond & Lambtor
 //https://www.programmingelectronics.com/arduino-sketch-with-millis-instead-of-delay/
 
 #include <FastLED.h>
@@ -19,6 +19,7 @@
 #define Blue ( 0, 0, 255)
 #define color Red //type the name of the above predefined color you want the scanner to be
 
+bool bSwipeOut = true;
 unsigned long nLastUpdateOut = 0;
 unsigned long nLastUpdateIn = 0;
 unsigned long counter; 
