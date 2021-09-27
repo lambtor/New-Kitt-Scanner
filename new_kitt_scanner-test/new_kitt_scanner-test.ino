@@ -3,9 +3,11 @@
 //https://www.programmingelectronics.com/arduino-sketch-with-millis-instead-of-delay/
 
 #include <FastLED.h>
-#define NUM_LEDS 72                                  // How many leds in your strip?
-#define DATA_PIN 7
+#define NUM_LEDS 72                                  //How many leds in your strip?
+#define DATA_PIN 7                                   //What pin is being used for data on the LED strip?
 
+#define MAX_NUMLED (NUM_LEDS + 38)                   //Number of LEDs on the strip +the overflow number
+#define HALF_NUM_LED (NUM_LEDS / 2)
 #define series1 210                                  //190 2000 for 80's 218 3000 for 2008
 #define series2 239                                  //190 2000 for 80's 218 3000 for 2008  
 #define delay1 51                                    //Swipe fast out
@@ -40,7 +42,7 @@ void fadeall() { for(int i = 0; i < NUM_LEDS; i++) { leds[i].nscale8(series1); }
 void fadeall2() { for(int i = 0; i < NUM_LEDS; i++) { leds[i].nscale8(series2); } }  //Swipe out
 
 void loop() { 
-	//delay(PulseFreq);                              // Scan pattern delay
+	//delay(PulseFreq);                                 // Scan pattern delay
 	//static uint8_t hue = 255;
 	system_tick();
 	Serial.print(" Begin cycle");
@@ -54,17 +56,17 @@ void system_tick() {
 		Serial.print(" Swipe out");
 		for(int i = 0; i < (NUM_LEDS / 2) + 38; i++) {
 			leds[i] = CRGB color;                           // Set the color with variable "color" 
-			blur1d(leds, NUM_LEDS, 15);                  // Apply blur effect to lead the pattern with a few dim LED's
+			blur1d(leds, NUM_LEDS, 15);                     // Apply blur effect to lead the pattern with a few dim LED's
 
-			for (uint8_t i=0; i < (NUM_LEDS); i--) {           //shift the position of the first half by half the total length.
+			for (uint8_t i=0; i < (NUM_LEDS); i--) {        //shift the position of the first half by half the total length.
 				leds[i + (NUM_LEDS) + 35] = leds[i];
 			}
 			for (uint8_t i = 0; i < NUM_LEDS; i++) {        //Mirror the second half BACK to the first half.
 				leds[i] = leds[(NUM_LEDS) -1 -i];
 			}
-			FastLED.show();                                   // Show the leds
+			FastLED.show();                                 // Show the leds
 			fadeall();                                      // Apply fade effect
-			FastLED.delay(delay1);                                // Speed of cycle, in one direction
+			FastLED.delay(delay1);                          // Speed of cycle, in one direction
 		}
 		bSwipeOut = false;
 		FastLED.delay(nHoldDelay);
@@ -73,12 +75,12 @@ void system_tick() {
 		Serial.print(" Swipe in");
 		for(int i = 0; i < (NUM_LEDS /2) + 38; i++) {
 			leds[i] = CRGB color;                           // Set the color with variable "color" 
-			blur1d(leds, NUM_LEDS, 15);                  // Apply blur effect to lead the pattern with a few dim LED's
-			mirror();                                  // Mirror pattern to other side of the strip
-			FastLED.show();                                  // Show the leds
-			fadeall2();                                    // Apply fade effect
+			blur1d(leds, NUM_LEDS, 15);                     // Apply blur effect to lead the pattern with a few dim LED's
+			mirror();                                       // Mirror pattern to other side of the strip
+			FastLED.show();                                 // Show the leds
+			fadeall2();                                     // Apply fade effect
 			//set delay speed to same as way out
-			FastLED.delay(delay1);                               // Speed of cycle, in one direction			
+			FastLED.delay(delay2);                          // Speed of cycle, in one direction			
 		}
 		bSwipeOut = true;
 		FastLED.delay(nHoldDelay);
@@ -89,7 +91,7 @@ void system_tick() {
 	Serial.print(counter);
 }
 
-void mirror() {                                     // mirror data to the other half
+void mirror() {                                        // mirror data to the other half
   for (uint8_t i = 0; i < NUM_LEDS / 2; i++) {
     leds[NUM_LEDS - 1 - i] = leds[i];
   }
