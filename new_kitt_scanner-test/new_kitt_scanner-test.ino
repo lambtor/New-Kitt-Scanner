@@ -122,8 +122,8 @@ void system_tick() {
 		//}
 		
 		//almost exact same loop, but instead we start from outer edge and decrement until we hit center
-		for (int j = NUM_LEDS_WITH_MARGIN; j < (NUM_LEDS / 2); j--) {
-			int nDistanceFromCenter = j - (NUM_LEDS / 2);
+		for (int k = NUM_LEDS_WITH_MARGIN; k >= (NUM_LEDS / 2); k--) {
+			int nDistanceFromCenter = k - (NUM_LEDS / 2);
 			
 			//this allows us to add iterations to the main loop.
 			//we only set leds as max color when we fully get in from the edges.
@@ -132,7 +132,7 @@ void system_tick() {
 			//fade everything in from black
 			if (nDistanceFromCenter >= 0) {							
 				if (nDistanceFromCenter == (NUM_LEDS / 2)) {
-					leds[j] = CRGB color;
+					leds[k] = CRGB color;
 					leds[0] = CRGB color;
 				} else if (nDistanceFromCenter < (NUM_LEDS / 2)) {
 					//set both sides, as blur1d can handle this. both indexes guaranteed to be valid leds
