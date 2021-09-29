@@ -37,6 +37,8 @@ void setup() {
 	//Serial.println("resetting");
 	LEDS.addLeds<WS2812,DATA_PIN,RGB>(leds,NUM_LEDS);
 	LEDS.setBrightness(200);
+	//ensure all LEDS are off at start
+	FastLED.clear(true);
   //counter=0; 
 }
 
@@ -105,6 +107,8 @@ void system_tick() {
 		}
 		
 		bSwipeOut = false;
+		//ensure all lights off before next swipe cycle
+		FastLED.clear(true);
 		//this is edge delay before cycling back toward center
 		//this, if uncommented, lets you add time between cycle halves
 		//FastLED.delay(nHoldOuterDelay);
@@ -122,44 +126,49 @@ void system_tick() {
 		//}
 		
 		//almost exact same loop, but instead we start from outer edge and decrement until we hit center
-		for (int j = NUM_LEDS_WITH_MARGIN; j > (NUM_LEDS / 2); j = j - 1) {
-			int nDistanceFromCenter = j - (NUM_LEDS / 2);
+		//for (int k = NUM_LEDS_WITH_MARGIN; k >= (NUM_LEDS / 2); k = k - 1) {
+		int k = NUM_LEDS_WITH_MARGIN;
+		int nDistanceFromCenter2 = 0;
+		while (k >= (NUM_LEDS / 2)) {
+			nDistanceFromCenter2 = k - (NUM_LEDS / 2);
 			
 			//this allows us to add iterations to the main loop.
 			//we only set leds as max color when we fully get in from the edges.
 			//once that happens, we let this iterate so 
 			//the blur1d and fadeall functions can eventually
 			//fade everything in from black
-			if (nDistanceFromCenter >= 0) {							
-				if (nDistanceFromCenter == (NUM_LEDS / 2)) {
-					leds[j] = CRGB color;
+			if (nDistanceFromCenter2 >= 0) {							
+				if (nDistanceFromCenter2 == (NUM_LEDS / 2)) {
+					leds[k] = CRGB color;
 					leds[0] = CRGB color;
-				} else if (nDistanceFromCenter < (NUM_LEDS / 2)) {
+				} else if (nDistanceFromCenter2 < (NUM_LEDS / 2)) {
 					//set both sides, as blur1d can handle this. both indexes guaranteed to be valid leds
-					leds[(NUM_LEDS / 2) + nDistanceFromCenter] = CRGB color;
-					leds[(NUM_LEDS / 2) - nDistanceFromCenter] = CRGB color;
-				} else if (nDistanceFromCenter > (NUM_LEDS / 2)) {
+					leds[(NUM_LEDS / 2) + nDistanceFromCenter2] = CRGB color;
+					leds[(NUM_LEDS / 2) - nDistanceFromCenter2] = CRGB color;
+				} else if (nDistanceFromCenter2 > (NUM_LEDS / 2)) {
 					//set only right edge, as mirror will be necessary to carry fade inward on left side					
-					leds[(NUM_LEDS / 2) + nDistanceFromCenter] = CRGB color;
+					leds[(NUM_LEDS / 2) + nDistanceFromCenter2] = CRGB color;
 					//this avoids attempting to set a full brightness color on an LED with index < 0
 					//leds[(NUM_LEDS / 2) - nDistanceFromCenter] = CRGB color;
-				}				
+				}
 			}
 			
 			blur1d(leds, NUM_LEDS, 15);
-			mirror();
+			//mirror();
 			FastLED.show();                                 // Show the leds
 			fadeall();                                      // Apply fade effect
 			FastLED.delay(delay1);                          // Speed of cycle, in one direction
-		}
-		
+			k = k - 1;
+		}	
 		
 		bSwipeOut = true;
+		//ensure all lights off before next swipe cycle
+		FastLED.clear(true);
 		//FastLED.delay(nHoldInnerDelay);	
 	}
 	//------------------------Mirror---------------------------
 	Serial.print(" End cycle");
-	Serial.print(counter);
+	//Serial.print(counter);
 }
 
 void mirror() {                                     // mirror data to the other half
