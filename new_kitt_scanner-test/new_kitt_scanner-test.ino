@@ -5,7 +5,7 @@
 #include <FastLED.h>
 #define NUM_LEDS 72                                  // How many leds in your strip?
 //to manage buffer for edge fade out/in, add or subtract a multiple of 2 to the NUM_LEDS
-#define NUM_LEDS_WITH_MARGIN  110
+#define NUM_LEDS_WITH_MARGIN  134
 #define DATA_PIN 7
 
 #define series1 210                                  //190 2000 for 80's 218 3000 for 2008
@@ -122,7 +122,7 @@ void system_tick() {
     //}
     
     //almost exact same loop, but instead we start from outer edge and decrement until we hit center
-    for (int k = NUM_LEDS_WITH_MARGIN; k >= (NUM_LEDS / 2); k--) {
+    for (int k = 110; k >= 26; k = k - 1) {
       int nDistanceFromCenter = k - (NUM_LEDS / 2);
       
       //this allows us to add iterations to the main loop.
