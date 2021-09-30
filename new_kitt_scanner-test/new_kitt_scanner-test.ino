@@ -5,7 +5,7 @@
 #include <FastLED.h>
 #define NUM_LEDS 72                                  // How many leds in your strip?
 //to manage buffer for edge fade out/in, add or subtract a multiple of 2 to the NUM_LEDS
-#define NUM_LEDS_WITH_MARGIN  80
+#define NUM_LEDS_WITH_MARGIN  110
 #define DATA_PIN 7
 
 #define series1 210                                  //190 2000 for 80's 218 3000 for 2008
