@@ -67,39 +67,21 @@ void system_tick() {
     if (bSwipeOut) {	  
 		//------------------------Swipe Out-----------------------
 		Serial.print(" Swipe out");
-		//for(int i = 0; i < (NUM_LEDS / 2) + 38; i++) {
-		//	leds[i] = CRGB color;                           // Set the color with variable "color" 
-		//	blur1d(leds, NUM_LEDS, 15);                  // Apply blur effect to lead the pattern with a few dim LED's
-
-		//	for (uint8_t i=0; i < (NUM_LEDS); i--) {           //shift the position of the first half by half the total length.
-		//		leds[i + (NUM_LEDS) + 35] = leds[i];
-		//	}
-		//	for (uint8_t i = 0; i < NUM_LEDS; i++) {        //Mirror the second half BACK to the first half.
-		//		leds[i] = leds[(NUM_LEDS) -1 -i];
-		//	}
-			
-		//	FastLED.show();                                   // Show the leds
-		//	fadeall();                                      // Apply fade effect
-		//	FastLED.delay(delay1);                                // Speed of cycle, in one direction
-		//}
 		
-		//swipe out		
-		
-		//initial is now 2 led gradually lit up, with partial blur to 1 led on each of their sides
+		//startup is now 2 leds fading in, with partial blur to 1 led on each of their sides
 		//fade these in	by just repeatedly calling fade function a decreasing number of times between show()
 		for (int nStartupIndex = 0; nStartupIndex < nAnimationStartupFramesCount; nStartupIndex++) {
-			//if (!bFullAnimationSaved) {
-				if (nStartupIndex == 0) {
-					leds[NUM_LEDS / 2] = CRGB color;
-					leds[(NUM_LEDS / 2) + 1] = CRGB color;
-					blur1d(leds, NUM_LEDS, 15);
-				}
+			//if (nStartupIndex == 0) {
+			leds[NUM_LEDS / 2] = CRGB color;
+			leds[(NUM_LEDS / 2) + 1] = CRGB color;
+			blur1d(leds, NUM_LEDS, 15);
+			//}
 				
-				//fade and blur the 2 lit LEDs gradually
-				//this is done by having each frame blur
-				for (int nTemp = 0; nTemp < (nAnimationStartupFramesCount - nStartupIndex); nTemp++) {				
-					fadeall();                                      // Apply fade effect
-				}
+			//fade and blur the 2 lit LEDs gradually
+			//this is done by having each frame blur
+			for (int nTemp = 0; nTemp < (nAnimationStartupFramesCount - nStartupIndex); nTemp++) {				
+				fadeall();                                      // Apply fade effect
+			}
 			
 			FastLED.show();                                 // Show the leds
 			FastLED.delay(delay1);                          // Speed of cycle, in one direction
@@ -147,6 +129,8 @@ void system_tick() {
 		
 		//major bug in fastLED library doesn't allow fading with a decrementing loop?? wtf		
 		for (int i = 0; i < nAnimationSwipeFramesCount; i++) {
+			//we can only assign to the right side.
+			//otherwise fastled will error out when we try to blur out from a negative led index (before beginning)
 			leds[(NUM_LEDS / 2) + (nAnimationSwipeFramesCount - i)] = CRGB color;
 			
 			//reverse order = max size - current frame# 
