@@ -127,10 +127,13 @@ void system_tick() {
 		
 		leds[(NUM_LEDS - 1)] = CRGB color;
 		leds[0] = CRGB color;
-		FastLED.delay(delay1); 
+		//FastLED.delay(delay1); 
 		
 		//fade in edge lights
 		for (int nStartupEdgeIndex = 0; nStartupEdgeIndex < nAnimationStartupFramesCount; nStartupEdgeIndex++) {
+			leds[(NUM_LEDS - 1)] = CRGB color;
+			leds[0] = CRGB color;
+			blur1d(leds, NUM_LEDS, 15);
 			//Serial.print(nStartupEdgeIndex + " : ");	
 			int nSubLoop = nAnimationStartupFramesCount - nStartupEdgeIndex;
 							
@@ -170,7 +173,7 @@ void system_tick() {
 		leds[NUM_LEDS / 2] = CRGB color;
 		FastLED.show();   
 		FastLED.delay(delay1); 
-		
+		*/
 		//leds have hit center. fade them out now.
 		for (int nStartupIndex3 = 0; nStartupIndex3 < nAnimationStartupFramesCount; nStartupIndex3++) {	
 			Serial.print(nStartupIndex3 + " : ");		
@@ -180,7 +183,7 @@ void system_tick() {
 			FastLED.show();                                 // Show the leds
 			FastLED.delay(delay1);                          // Speed of cycle, in one direction
 		}
-		*/
+		
 		bSwipeOut = true;
 		//ensure all lights off before next swipe cycle
 		//FastLED.clear(true);
