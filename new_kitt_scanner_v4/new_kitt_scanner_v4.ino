@@ -143,6 +143,8 @@ void system_tick() {
 			FastLED.show();                                 // Show the leds
 			FastLED.delay(delay1);                          // Speed of cycle, in one direction
 		}
+		FastLED.clear(true);
+		
 		/*
 		Serial.println("swipe edge lights inward i ");
 		
