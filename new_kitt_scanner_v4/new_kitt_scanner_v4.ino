@@ -127,6 +127,7 @@ void system_tick() {
 		
 		leds[(NUM_LEDS - 1)] = CRGB color;
 		leds[0] = CRGB color;
+		FastLED.delay(delay1); 
 		
 		//fade in edge lights
 		for (int nStartupEdgeIndex = 0; nStartupEdgeIndex < nAnimationStartupFramesCount; nStartupEdgeIndex++) {
