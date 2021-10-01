@@ -140,6 +140,7 @@ void system_tick() {
 		}
 		
 		Serial.println("swipe edge lights inward i ");
+		/*
 		//move the lit edges in by 1 each cycle
 		for (int i = 1; i < (NUM_LEDS / 2); i++) {
 			Serial.print(i + " : ");
@@ -171,7 +172,7 @@ void system_tick() {
 			FastLED.show();                                 // Show the leds
 			FastLED.delay(delay1);                          // Speed of cycle, in one direction
 		}
-		
+		*/
 		bSwipeOut = true;
 		//ensure all lights off before next swipe cycle
 		//FastLED.clear(true);
