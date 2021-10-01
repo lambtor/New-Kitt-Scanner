@@ -1,4 +1,4 @@
-//Knight Scanner v5
+//Knight Scanner v3
 //By Ashrond
 //https://www.programmingelectronics.com/arduino-sketch-with-millis-instead-of-delay/
 
@@ -122,13 +122,11 @@ void system_tick() {
 		FastLED.delay(nHoldOuterDelay);
 	} else { 
 		 
-		Serial.println("fade in edge lights");
+		Serial.println("fade in edge lights | startupEdgeIndex ");
 		
 		//fade in edge lights
 		for (int nStartupEdgeIndex = 0; nStartupEdgeIndex < nAnimationStartupFramesCount; nStartupEdgeIndex++) {
-			leds[NUM_LEDS - 1] = CRGB color;
-			leds[0] = CRGB color;				
-			blur1d(leds, NUM_LEDS, 15);
+			Serial.print(nStartupEdgeIndex + " : ");			
 							
 			//fade and blur the 2 lit LEDs gradually
 			//this is done by having each frame blur a progressively lower # of times between show()
@@ -141,9 +139,10 @@ void system_tick() {
 			FastLED.delay(delay1);                          // Speed of cycle, in one direction
 		}
 		
-		Serial.println("swipe edge lights inward");
+		Serial.println("swipe edge lights inward i ");
 		//move the lit edges in by 1 each cycle
 		for (int i = 1; i < (NUM_LEDS / 2); i++) {
+			Serial.print(i + " : ");
 			//distance needs to start from edge
 			//int nDistanceFromCenter2 = (NUM_LEDS / 2) - i;
 			leds[NUM_LEDS - i] = CRGB color;
@@ -159,12 +158,13 @@ void system_tick() {
 			FastLED.delay(delay1);                          // Speed of cycle, in one direction
 		}	
 		
-		Serial.println("fade out center lights after swipe in");	
+		Serial.println("fade out center lights after swipe in nStartupEdgeIndex3 ");	
 		leds[(NUM_LEDS / 2) - 1] = CRGB color;
 		leds[NUM_LEDS / 2] = CRGB color;		
 		
 		//leds have hit center. fade them out now.
-		for (int nStartupIndex3 = 0; nStartupIndex3 < nAnimationStartupFramesCount; nStartupIndex3++) {							
+		for (int nStartupIndex3 = 0; nStartupIndex3 < nAnimationStartupFramesCount; nStartupIndex3++) {	
+			Serial.print(nStartupIndex3 + " : ");		
 			//fade down the 2 center lit LEDs gradually						
 			fadeall();                                      // Apply fade effect
 			
