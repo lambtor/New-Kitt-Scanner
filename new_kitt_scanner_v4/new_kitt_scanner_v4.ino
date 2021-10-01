@@ -5,7 +5,7 @@
 #include <FastLED.h>
 #define NUM_LEDS 72                                  // How many leds in your strip?
 //to manage buffer for edge fade out/in, add or subtract a multiple of 2 to the NUM_LEDS
-#define NUM_LEDS_WITH_MARGIN	136
+//#define NUM_LEDS_WITH_MARGIN	136
 #define DATA_PIN 7
 
 #define series1 210                                  //190 2000 for 80's 218 3000 for 2008
@@ -28,7 +28,7 @@
 int nHoldOuterDelay = 2000;
 int nHoldInnerDelay = 2000;
 //need this 
-int nAnimationSwipeFramesCount = NUM_LEDS_WITH_MARGIN - (NUM_LEDS / 2);
+//int nAnimationSwipeFramesCount = NUM_LEDS_WITH_MARGIN - (NUM_LEDS / 2);
 int nAnimationStartupFramesCount = 64;
 //int nAnimationTotalFramesCount = nAnimationSwipeFramesCount + nAnimationStartupFramesCount;
 
@@ -45,6 +45,8 @@ void setup() {
 	//ensure all LEDS are off at start
 	FastLED.clear(true);
 	Serial.println("initialized");  
+	
+	//initialize buttons here, startup color for all lights
 }
 
 //.nscale8 effects the length of the light trail 190 is 2000 series, 220 appears similar to 3000 series.
@@ -52,8 +54,8 @@ void fadeall() { for(int i = 0; i < NUM_LEDS; i++) { leds[i].nscale8(series1); }
 void fadeall2() { for(int i = 0; i < NUM_LEDS; i++) { leds[i].nscale8(series2); } }  //Swipe out
 
 void loop() { 
-	//delay(PulseFreq);                              // Scan pattern delay
-	//static uint8_t hue = 255;
+	//based on any button definitions, check related value to animation mode or color settings
+
 	system_tick();
 	Serial.println("Begin cycle");
 }
