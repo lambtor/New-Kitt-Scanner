@@ -1,4 +1,4 @@
-//Knight Scanner v3
+//Knight Scanner v5
 //By Ashrond
 //https://www.programmingelectronics.com/arduino-sketch-with-millis-instead-of-delay/
 
@@ -105,7 +105,9 @@ void system_tick() {
 		}
 		
 		//faded lights in from center, cycled them out to edges. now fade them out while at edges
-		for (int nStartupIndex = 0; nStartupIndex < nAnimationStartupFramesCount; nStartupIndex++) {							
+		for (int nStartupIndex4 = 0; nStartupIndex4 < nAnimationStartupFramesCount; nStartupIndex4++) {	
+			//blur1d(leds, NUM_LEDS, 15);		
+			Serial.println("fade edges out");
 			//fade down the blurred, edge lit LEDs gradually		
 			fadeall();                                      // Apply fade effect			
 			FastLED.show();                                 // Show the leds
@@ -114,7 +116,7 @@ void system_tick() {
 		
 		bSwipeOut = false;
 		//ensure all lights off before next swipe cycle
-		FastLED.clear(true);
+		//FastLED.clear(true);
 		//this is edge delay before cycling back toward center
 		//this, if uncommented, lets you add time between cycle halves
 		FastLED.delay(nHoldOuterDelay);
@@ -130,7 +132,8 @@ void system_tick() {
 							
 			//fade and blur the 2 lit LEDs gradually
 			//this is done by having each frame blur a progressively lower # of times between show()
-			for (int nTemp = 0; nTemp < (nAnimationStartupFramesCount - nStartupEdgeIndex); nTemp++) {				
+			for (int nTemp = 0; nTemp < (nAnimationStartupFramesCount - nStartupEdgeIndex); nTemp++) {	
+				//blur1d(leds, NUM_LEDS, 15);		
 				fadeall();                                      // Apply fade effect
 			}
 			
@@ -140,7 +143,7 @@ void system_tick() {
 		
 		Serial.println("swipe edge lights inward");
 		//move the lit edges in by 1 each cycle
-		for (int i = 1; i <= (NUM_LEDS / 2); i++) {
+		for (int i = 1; i < (NUM_LEDS / 2); i++) {
 			//distance needs to start from edge
 			//int nDistanceFromCenter2 = (NUM_LEDS / 2) - i;
 			leds[NUM_LEDS - i] = CRGB color;
@@ -156,10 +159,13 @@ void system_tick() {
 			FastLED.delay(delay1);                          // Speed of cycle, in one direction
 		}	
 		
-		Serial.println("fade out center lights after swipe in");		
+		Serial.println("fade out center lights after swipe in");	
+		leds[(NUM_LEDS / 2) - 1] = CRGB color;
+		leds[NUM_LEDS / 2] = CRGB color;		
+		
 		//leds have hit center. fade them out now.
-		for (int nStartupIndex = 0; nStartupIndex < nAnimationStartupFramesCount; nStartupIndex++) {							
-			//fade down the 2 center lit LEDs gradually		
+		for (int nStartupIndex3 = 0; nStartupIndex3 < nAnimationStartupFramesCount; nStartupIndex3++) {							
+			//fade down the 2 center lit LEDs gradually						
 			fadeall();                                      // Apply fade effect
 			
 			FastLED.show();                                 // Show the leds
@@ -168,7 +174,7 @@ void system_tick() {
 		
 		bSwipeOut = true;
 		//ensure all lights off before next swipe cycle
-		FastLED.clear(true);
+		//FastLED.clear(true);
 		FastLED.delay(nHoldInnerDelay);	
 	}
 	//------------------------Mirror---------------------------
