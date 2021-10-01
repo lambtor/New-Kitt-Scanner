@@ -57,13 +57,14 @@ void loop() {
 	//based on any button definitions, check related value to animation mode or color settings
 
 	system_tick();
-	Serial.println("Begin cycle");
+	//Serial.println("Begin cycle");
 }
  
 void system_tick() { 
     //counter=millis();
 	
     if (bSwipeOut) {	  
+		Serial.println("Begin cycle.");
 		//------------------------Swipe Out-----------------------
 		Serial.println("Swipe out");
 		
@@ -107,9 +108,7 @@ void system_tick() {
 		Serial.println("fade edges out");
 		
 		//faded lights in from center, cycled them out to edges. now fade them out while at edges
-		for (int nStartupIndex4 = 0; nStartupIndex4 < nAnimationStartupFramesCount; nStartupIndex4++) {	
-			//blur1d(leds, NUM_LEDS, 15);		
-			
+		for (int nStartupIndex4 = 0; nStartupIndex4 < nAnimationStartupFramesCount; nStartupIndex4++) {				
 			//fade down the blurred, edge lit LEDs gradually		
 			fadeall();                                      // Apply fade effect			
 			FastLED.show();                                 // Show the leds
@@ -136,15 +135,13 @@ void system_tick() {
 			//fade and blur the 2 lit LEDs gradually
 			//this is done by having each frame blur a progressively lower # of times between show()
 			for (int nTemp = 0; nTemp < (nAnimationStartupFramesCount - nStartupEdgeIndex); nTemp++) {	
-				//blur1d(leds, NUM_LEDS, 15);		
 				fadeall();                                      // Apply fade effect
 			}
 			
 			FastLED.show();                                 // Show the leds
 			FastLED.delay(delay1);                          // Speed of cycle, in one direction
 		}
-		FastLED.clear(true);
-		
+		Serial.println("-");
 		/*
 		Serial.println("swipe edge lights inward i ");
 		
@@ -184,9 +181,10 @@ void system_tick() {
 		//ensure all lights off before next swipe cycle
 		//FastLED.clear(true);
 		FastLED.delay(nHoldInnerDelay);	
+		Serial.println("End cycle.");
 	}
 	//------------------------Mirror---------------------------
-	Serial.print(" End cycle");
+	
 	//Serial.print(counter);
 }
 
