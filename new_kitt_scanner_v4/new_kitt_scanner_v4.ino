@@ -167,7 +167,7 @@ void system_tick() {
 		bSwipeOut = true;
 		//ensure all lights off before next swipe cycle
 		FastLED.clear(true);
-		//FastLED.delay(nHoldInnerDelay);	
+		FastLED.delay(nHoldInnerDelay);	
 	}
 	//------------------------Mirror---------------------------
 	Serial.print(" End cycle");
