@@ -104,10 +104,12 @@ void system_tick() {
 			FastLED.delay(delay1);                          // Speed of cycle, in one direction
 		}
 		
+		Serial.println("fade edges out");
+		
 		//faded lights in from center, cycled them out to edges. now fade them out while at edges
 		for (int nStartupIndex4 = 0; nStartupIndex4 < nAnimationStartupFramesCount; nStartupIndex4++) {	
 			//blur1d(leds, NUM_LEDS, 15);		
-			Serial.println("fade edges out");
+			
 			//fade down the blurred, edge lit LEDs gradually		
 			fadeall();                                      // Apply fade effect			
 			FastLED.show();                                 // Show the leds
