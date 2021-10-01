@@ -134,7 +134,7 @@ void system_tick() {
 							
 			//fade and blur the 2 lit LEDs gradually
 			//this is done by having each frame blur a progressively lower # of times between show()
-			for (int nTemp = 0; nTemp < (nAnimationStartupFramesCount - nStartupEdgeIndex); nTemp++) {	
+			for (int nTemp2 = 0; nTemp2 < (nAnimationStartupFramesCount - nStartupEdgeIndex); nTemp2++) {	
 				fadeall();                                      // Apply fade effect
 			}
 			
