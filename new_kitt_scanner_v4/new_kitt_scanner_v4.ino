@@ -131,11 +131,12 @@ void system_tick() {
 		
 		//fade in edge lights
 		for (int nStartupEdgeIndex = 0; nStartupEdgeIndex < nAnimationStartupFramesCount; nStartupEdgeIndex++) {
-			Serial.print(nStartupEdgeIndex + " : ");			
+			Serial.print(nStartupEdgeIndex + " : ");	
+			int nSubLoop = nAnimationStartupFramesCount - nStartupEdgeIndex;
 							
 			//fade and blur the 2 lit LEDs gradually
 			//this is done by having each frame blur a progressively lower # of times between show()
-			for (int nTemp2 = 0; nTemp2 < (nAnimationStartupFramesCount - nStartupEdgeIndex); nTemp2++) {	
+			for (int nTemp2 = 0; nTemp2 < nSubLoop; nTemp2++) {	
 				fadeall();                                      // Apply fade effect
 			}
 			
@@ -143,7 +144,7 @@ void system_tick() {
 			FastLED.delay(delay1);                          // Speed of cycle, in one direction
 		}
 		Serial.println("-");
-		/*
+		
 		Serial.println("swipe edge lights inward i ");
 		
 		//move the lit edges in by 1 each cycle
@@ -162,8 +163,9 @@ void system_tick() {
 			
 			FastLED.show();                                 // Show the leds
 			FastLED.delay(delay1);                          // Speed of cycle, in one direction
-		}	
+		}
 		
+		/*
 		Serial.println("fade out center lights after swipe in nStartupEdgeIndex3 ");	
 		leds[(NUM_LEDS / 2) - 1] = CRGB color;
 		leds[NUM_LEDS / 2] = CRGB color;		
