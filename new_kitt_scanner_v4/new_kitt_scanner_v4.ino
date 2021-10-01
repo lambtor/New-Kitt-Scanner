@@ -1,5 +1,5 @@
-//Knight Scanner v3
-//By Ashrond
+//Knight Scanner v5
+//By Ashrond ft. Lambtor
 //https://www.programmingelectronics.com/arduino-sketch-with-millis-instead-of-delay/
 
 #include <FastLED.h>
@@ -126,6 +126,9 @@ void system_tick() {
 		 
 		Serial.println("fade in edge lights | startupEdgeIndex ");
 		
+		leds[(NUM_LEDS - 1)] = CRGB color;
+		leds[0] = CRGB color;
+		
 		//fade in edge lights
 		for (int nStartupEdgeIndex = 0; nStartupEdgeIndex < nAnimationStartupFramesCount; nStartupEdgeIndex++) {
 			Serial.print(nStartupEdgeIndex + " : ");			
@@ -140,15 +143,15 @@ void system_tick() {
 			FastLED.show();                                 // Show the leds
 			FastLED.delay(delay1);                          // Speed of cycle, in one direction
 		}
-		
-		Serial.println("swipe edge lights inward i ");
 		/*
+		Serial.println("swipe edge lights inward i ");
+		
 		//move the lit edges in by 1 each cycle
 		for (int i = 1; i < (NUM_LEDS / 2); i++) {
 			Serial.print(i + " : ");
 			//distance needs to start from edge
 			//int nDistanceFromCenter2 = (NUM_LEDS / 2) - i;
-			leds[NUM_LEDS - i] = CRGB color;
+			leds[(NUM_LEDS - i)] = CRGB color;
 			leds[i-1] = CRGB color;
 			
 			//reverse order = max size - current frame# 
